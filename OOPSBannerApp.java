@@ -1,52 +1,72 @@
+import java.util.*;
+
 public class OOPSBannerApp {
+
+    // -------- Character Pattern Class --------
+    static class CharacterPatternMap {
+        private char character;
+        private String[] pattern;
+
+        public CharacterPatternMap(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
+
+        public char getCharacter() {
+            return character;
+        }
+
+        public String[] getPattern() {
+            return pattern;
+        }
+    }
 
     public static void main(String[] args) {
 
-        String[] banner = new String[7];
+        // Store character patterns
+        Map<Character, CharacterPatternMap> patternMap = new HashMap<>();
 
-        for (int i = 0; i < 7; i++) {
-            banner[i] = buildO(i) + "  " +
-                        buildO(i) + "  " +
-                        buildP(i) + "  " +
-                        buildS(i);
-        }
+        patternMap.put('O', new CharacterPatternMap('O', new String[]{
+                "O O O O",
+                "O     O",
+                "O     O",
+                "O     O",
+                "O     O",
+                "O     O",
+                "O O O O"
+        }));
 
-        for (String line : banner) {
+        patternMap.put('P', new CharacterPatternMap('P', new String[]{
+                "P P P",
+                "P     P",
+                "P P P",
+                "P",
+                "P",
+                "P",
+                "P"
+        }));
+
+        patternMap.put('S', new CharacterPatternMap('S', new String[]{
+                "S S S",
+                "S",
+                "S S",
+                "    S",
+                "    S",
+                "    S",
+                "S S S"
+        }));
+
+        String word = "OOPS";
+
+        // Build banner row by row
+        for (int row = 0; row < 7; row++) {
+            StringBuilder line = new StringBuilder();
+
+            for (char ch : word.toCharArray()) {
+                line.append(patternMap.get(ch).getPattern()[row]).append("   ");
+            }
+
             System.out.println(line);
         }
-    }
-
-    // ----------- O Pattern -----------
-    public static String buildO(int row) {
-        if (row == 0 || row == 6)
-            return String.join(" ", "O","O","O","O");
-        else
-            return String.join(" ", "O"," "," ","O");
-    }
-
-    // ----------- P Pattern -----------
-    public static String buildP(int row) {
-        if (row == 0)
-            return String.join(" ", "P","P","P");
-        else if (row == 1)
-            return String.join(" ", "P"," "," ","P");
-        else if (row == 2)
-            return String.join(" ", "P","P","P");
-        else
-            return String.join(" ", "P");
-    }
-
-    // ----------- S Pattern -----------
-    public static String buildS(int row) {
-        if (row == 0 || row == 6)
-            return String.join(" ", "S","S","S");
-        else if (row == 2)
-            return String.join(" ", "S","S");
-        else if (row == 1)
-            return String.join(" ", "S");
-        else if (row == 3 || row == 4 || row == 5)
-            return String.join(" ", "S");
-        else
-            return "";
     }
 }
